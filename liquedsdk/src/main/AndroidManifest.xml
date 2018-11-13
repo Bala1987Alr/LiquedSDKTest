@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.liquedsdk">
+
+    <application>
+        <activity
+            android:name=".ResignationScreen"
+            android:label="@string/title_activity_resignation_screen"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".LoginScreen" />
+        <activity android:name=".RegistrationScreen" />
+        <activity android:name=".HomeScreen"></activity>
+    </application>
+
+</manifest>
