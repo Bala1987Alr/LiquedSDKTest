@@ -3,6 +3,8 @@ package com.liquedsdk.apikey;
 import android.content.Context;
 
 import com.liquedsdk.Payment.Payment;
+import com.liquedsdk.exceptions.PaymentException;
+import com.liquedsdk.exceptions.SecretKeyException;
 
 public class APIKey{
 
@@ -60,43 +62,52 @@ public class APIKey{
 
     public interface PaymentInterface {
 
-        public void onPaymentSuccess();
-        public void onPaymentFailed();
-        public void onPaymentCancelled();
+        public void onPaymentSuccess() throws PaymentException;
+        public void onPaymentFailed() throws PaymentException;
+        public void onPaymentCancelled() throws PaymentException;
 
     }
     private PaymentInterface paymentInterface;
 
-    public void doPayment(PaymentInterface paymentInterface)
+    public void doPayment(PaymentInterface paymentInterface) throws PaymentException
     {
 
         this.paymentInterface=paymentInterface;
 
-        if(checkAPIKey(this.appSecret, this.apiKey))
+        try {
+            if(checkAPIKey(this.appSecret, this.apiKey))
+            {
+                paymentToMerchant();
+            }else
+            {
+                paymentInterface.onPaymentFailed();
+            }
+        } catch (SecretKeyException e) {
+            e.printStackTrace();
+        }catch (PaymentException e)
         {
-            paymentToMerchant();
-        }else
-        {
-            paymentInterface.onPaymentFailed();
+            e.printStackTrace();
         }
-
 
 
     }
 
-    private boolean checkAPIKey(String appSecret, String apiKey)
+    private boolean checkAPIKey(String appSecret, String apiKey) throws SecretKeyException
     {
         //validate against server that it is valid or not
-        if(appSecret.equals("1") && appSecret.equals("1"))
+        if(appSecret == null || apiKey==null || appSecret.length() ==0 || apiKey.length()==0)
+        {
+            throw new SecretKeyException("Invalid app secret ot invalid key");
+        }
+        else if(appSecret.equals("1") && appSecret.equals("1"))
         {
             return true;
         }
         return false;
     }
 
-    private void paymentToMerchant()
+    private void paymentToMerchant() throws PaymentException
     {
-
         paymentInterface.onPaymentSuccess();
 
     }
