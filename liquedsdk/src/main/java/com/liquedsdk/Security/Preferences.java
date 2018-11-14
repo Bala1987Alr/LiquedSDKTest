@@ -53,8 +53,7 @@ public class Preferences {
     private static final String AES_MODE = "AES/ECB/PKCS7Padding";
     private KeyStore keyStore;
     private Context context;
-    Key privatekey;
-    Key publicKey;
+
 
     public Preferences(Context context)
     {
@@ -143,7 +142,7 @@ public class Preferences {
         SharedPreferences pref = context.getSharedPreferences(SHARED_PREFENCE_NAME, Context.MODE_PRIVATE);
         String enryptedKeyB64 = pref.getString(ENCRYPTED_KEY, null);
 
-        if (enryptedKeyB64 == null) {
+        if (enryptedKeyB64 == null || enryptedKeyB64.length()==0) {
             byte[] key = new byte[16];
             SecureRandom secureRandom = new SecureRandom();
             secureRandom.nextBytes(key);

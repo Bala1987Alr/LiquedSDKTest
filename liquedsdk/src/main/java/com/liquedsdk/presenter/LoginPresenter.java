@@ -2,21 +2,23 @@ package com.liquedsdk.presenter;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
 
 import com.liquedsdk.model.IUser;
 import com.liquedsdk.model.UserModel;
+import com.liquedsdk.view.ILoginView;
 import com.liquedsdk.view.IRegistrationView;
 
-public class LoginPresenter implements ILoginPresenter{
+public class LoginPresenter implements ILoginPresenter, View.OnClickListener {
 
-    IRegistrationView iRegistrationView;
+    ILoginView iLoginView;
     IUser user;
-    Handler registrationHandler;
+    Handler loginHandler;
 
-    public LoginPresenter(IRegistrationView iRegistrationView)
+    public LoginPresenter(ILoginView iLoginView)
     {
-        this.iRegistrationView=iRegistrationView;
-        registrationHandler=new Handler(Looper.getMainLooper());
+        this.iLoginView=iLoginView;
+        loginHandler=new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -28,19 +30,13 @@ public class LoginPresenter implements ILoginPresenter{
         if (code!=0)
             isLoginSuccess = false;
         final Boolean result = isLoginSuccess;
-        registrationHandler.postDelayed(new Runnable()
-            {
-                @Override
-                public void run()
-                {
 
-                    try {
-                        iRegistrationView.onLoginResult(result, code);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }, 1000);
+        try {
+            iLoginView.onLoginResult(result, code);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
     }
 
     @Override
@@ -49,5 +45,8 @@ public class LoginPresenter implements ILoginPresenter{
     }
 
 
+    @Override
+    public void onClick(View view) {
 
+    }
 }

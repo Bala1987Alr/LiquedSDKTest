@@ -43,17 +43,17 @@ public class HomeScreen extends AppCompatActivity {
         apiKey.doPayment(new APIKey.PaymentInterface() {
             @Override
             public void onPaymentSuccess() {
-                Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Payment Success",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onPaymentFailed() {
-                System.out.println("Payment failed....");
+                Toast.makeText(getApplicationContext(),"Payment Failed",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onPaymentCancelled() {
-
+                Toast.makeText(getApplicationContext(),"Payment Cancelled",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -63,6 +63,7 @@ public class HomeScreen extends AppCompatActivity {
         SharedPreferences.Editor editor=preferences.edit();
         editor.putBoolean(Preferences.IS_LOGIN, false);
         editor.commit();
+        startActivity(new Intent(this,LoginScreen.class));
         this.finish();
     }
     public void exit(View view)
@@ -70,7 +71,6 @@ public class HomeScreen extends AppCompatActivity {
         SharedPreferences preferences=getSharedPreferences(Preferences.SHARED_PREFENCE_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferences.edit();
         editor.putString(Preferences.ENCRYPTED_KEY,"");
-        editor.putString(Preferences.USER_NAME,"");
         editor.putString(Preferences.USER_NAME,"");
         editor.putString(Preferences.USER_PASSWORD,"");
         editor.putBoolean(Preferences.IS_REGISTERED, false);

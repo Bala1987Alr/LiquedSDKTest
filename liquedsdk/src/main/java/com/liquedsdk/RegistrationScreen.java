@@ -43,13 +43,21 @@ public class RegistrationScreen extends AppCompatActivity implements IRegistrati
     }
 
     @Override
-    public void onClick(View view) {
+    protected void onDestroy() {
 
-        registrationPresenter.doLogin(editText_UserName.getText().toString(), editText_Password.getText().toString());
+        super.onDestroy();
+        registrationPresenter=null;
+
     }
 
     @Override
-    public void onLoginResult(Boolean result, int code) throws Exception {
+    public void onClick(View view) {
+
+        registrationPresenter.doRegistration(editText_UserName.getText().toString(), editText_Password.getText().toString());
+    }
+
+    @Override
+    public void onRegistrationResult(Boolean result, int code) throws Exception {
 
         if (result)
         {

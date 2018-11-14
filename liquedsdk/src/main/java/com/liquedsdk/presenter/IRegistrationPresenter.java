@@ -3,7 +3,7 @@ package com.liquedsdk.presenter;
 public interface IRegistrationPresenter
 {
 
-    void doLogin(String name, String password);
+    void doRegistration(String name, String password);
 
 
 }

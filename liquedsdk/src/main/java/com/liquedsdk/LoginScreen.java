@@ -13,11 +13,16 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.liquedsdk.Security.Preferences;
+import com.liquedsdk.model.IUser;
+import com.liquedsdk.presenter.ILoginPresenter;
+import com.liquedsdk.presenter.IRegistrationPresenter;
+import com.liquedsdk.presenter.LoginPresenter;
+import com.liquedsdk.view.ILoginView;
 import com.liquedsdk.view.IRegistrationView;
 
 import java.nio.charset.Charset;
 
-public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
+public class LoginScreen extends AppCompatActivity implements View.OnClickListener, ILoginView {
 
     private SharedPreferences sharedPreferences;
     private Preferences preferences;
@@ -27,12 +32,16 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private Button btnRegister;
     private AlertDialog alertDialog;
     private AlertDialog.Builder aleBuilder;
+    private ILoginPresenter iLoginPresenter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen);
+
+        iLoginPresenter=new LoginPresenter(this);
+
 
         editText_UserName = (EditText) this.findViewById(R.id.edit_username);
         editText_Password = (EditText) this.findViewById(R.id.edit_password);
@@ -45,10 +54,17 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View view) {
 
+        iLoginPresenter.doLogin(editText_UserName.getText().toString(),editText_Password.getText().toString());
+
+    }
+
+    @Override
+    public void onLoginResult(Boolean result, int code) throws Exception {
+
         preferences=new Preferences(this);
         sharedPreferences=getSharedPreferences(Preferences.SHARED_PREFENCE_NAME,Context.MODE_PRIVATE);
         String userName=sharedPreferences.getString(Preferences.USER_NAME,null);
-        String password=sharedPreferences.getString(Preferences.USER_NAME,null);
+        String password=sharedPreferences.getString(Preferences.USER_PASSWORD,null);
         byte[] decoded_username=Base64.decode(userName,Base64.DEFAULT);
         byte[] decoded_password=Base64.decode(password,Base64.DEFAULT);
         try
@@ -60,22 +76,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(editText_UserName.getText().toString().length()==0
-                || editText_Password.getText().toString().length()==0)
-        {
-            aleBuilder=new AlertDialog.Builder(this).
-                    setCancelable(false)
-                    .setMessage("Invalid username or password")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-            alertDialog=aleBuilder.create();
-            alertDialog.show();
-        }
-        else if (new String(userByte).equals(editText_UserName.getText().toString()) && new String(passByte).equals(editText_Password.getText().toString()))
+
+        if (new String(userByte).equals(editText_UserName.getText().toString()) && new String(passByte).equals(editText_Password.getText().toString()))
         {
             SharedPreferences preferences=getSharedPreferences(Preferences.SHARED_PREFENCE_NAME,Context.MODE_PRIVATE);
             SharedPreferences.Editor editor=preferences.edit();
@@ -99,7 +101,5 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             alertDialog.show();
 
         }
-
-
     }
 }

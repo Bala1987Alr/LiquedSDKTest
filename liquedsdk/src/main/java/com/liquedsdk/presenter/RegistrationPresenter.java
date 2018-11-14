@@ -20,7 +20,7 @@ public class RegistrationPresenter implements IRegistrationPresenter{
     }
 
     @Override
-    public void doLogin(String name, String password){
+    public void doRegistration(String name, String password){
 
         Boolean isLoginSuccess = true;
         user=new UserModel(name, password);
@@ -34,12 +34,12 @@ public class RegistrationPresenter implements IRegistrationPresenter{
                 public void run()
                 {
                     try {
-                        iRegistrationView.onLoginResult(result, code);
+                        iRegistrationView.onRegistrationResult(result, code);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-            }, 1000);
+            }, 2000);
     }
 
 

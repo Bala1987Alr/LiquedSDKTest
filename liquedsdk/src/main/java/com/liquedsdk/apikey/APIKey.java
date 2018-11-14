@@ -69,7 +69,7 @@ public class APIKey{
 
     public void doPayment(PaymentInterface paymentInterface)
     {
-        System.out.println("Coming");
+
         this.paymentInterface=paymentInterface;
 
         if(checkAPIKey(this.appSecret, this.apiKey))
