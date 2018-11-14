@@ -49,21 +49,32 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        preferences=getSharedPreferences(Preferences.SHARED_PREFENCE_NAME,Context.MODE_PRIVATE);
 
     }
 
     public void trigger_reg(View v)
     {
-        preferences=getSharedPreferences(Preferences.SHARED_PREFENCE_NAME,Context.MODE_PRIVATE);
+
         boolean isUserRegistered=preferences.getBoolean(Preferences.IS_REGISTERED,false);
         if (isUserRegistered) {
             startActivity(new Intent(this, LoginScreen.class));
         } else {
             startActivity(new Intent(this, RegistrationScreen.class));
         }
+    }
 
-
-
+    public void payment(View v)
+    {
+        if(!preferences.getBoolean(Preferences.IS_REGISTERED,false)) {
+            startActivity(new Intent(this, RegistrationScreen.class));
+        }
+        else if(!preferences.getBoolean(Preferences.IS_LOGIN,false)){
+            startActivity(new Intent(this, LoginScreen.class));
+        }
+        else {
+            startActivity(new Intent(this, HomeScreen.class));
+        }
     }
 
 
