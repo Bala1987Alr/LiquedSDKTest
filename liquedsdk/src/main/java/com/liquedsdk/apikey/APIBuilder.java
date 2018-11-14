@@ -25,8 +25,8 @@ public class APIBuilder {
         this.context = context;
         return this;
     }
-    public APIBuilder()
-    {
+
+    public APIBuilder() {
 
     }
 

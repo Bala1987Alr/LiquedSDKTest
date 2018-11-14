@@ -21,7 +21,6 @@ public class PaymentBuilder
         return this;
     }
     public PaymentBuilder setPaymentTitle(String payment_title) {
-        this.payment_title = payment_title;
         return this;
     }
     public PaymentBuilder setPayemtQty(String payemt_qty) {
@@ -40,6 +39,7 @@ public class PaymentBuilder
     {
 
     }
+
     public Payment build() {
         return new Payment(total_amout,payment_title,payemt_qty,payment_reference_number,merchant_id);
     }
