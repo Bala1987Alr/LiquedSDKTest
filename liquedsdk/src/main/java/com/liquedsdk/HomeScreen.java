@@ -31,7 +31,7 @@ public class HomeScreen extends AppCompatActivity {
     }
     public void payment(View view)
     {
-        Toast.makeText(this,"coming",Toast.LENGTH_SHORT).show();
+
         Payment payment=new PaymentBuilder()
                 .setPaymentTitle("")
                 .setTotalAmout(10)
