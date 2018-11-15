@@ -69,7 +69,7 @@ public class APIKey{
     }
     private PaymentInterface paymentInterface;
 
-    public void doPayment(PaymentInterface paymentInterface) throws PaymentException
+    public void doPayment(PaymentInterface paymentInterface)
     {
 
         this.paymentInterface=paymentInterface;
@@ -82,9 +82,7 @@ public class APIKey{
             {
                 paymentInterface.onPaymentFailed();
             }
-        } catch (SecretKeyException e) {
-            e.printStackTrace();
-        }catch (PaymentException e)
+        } catch (PaymentException e)
         {
             e.printStackTrace();
         }
@@ -92,12 +90,16 @@ public class APIKey{
 
     }
 
-    private boolean checkAPIKey(String appSecret, String apiKey) throws SecretKeyException
+    private boolean checkAPIKey(String appSecret, String apiKey)
     {
         //validate against server that it is valid or not
         if(appSecret == null || apiKey==null || appSecret.length() ==0 || apiKey.length()==0)
         {
-            throw new SecretKeyException("Invalid app secret ot invalid key");
+            try {
+                throw new SecretKeyException("Invalid app secret ot invalid key");
+            } catch (SecretKeyException e) {
+                e.printStackTrace();
+            }
         }
         else if(appSecret.equals("1") && appSecret.equals("1"))
         {
@@ -107,8 +109,23 @@ public class APIKey{
     }
 
     private void paymentToMerchant() throws PaymentException
-    {
-        paymentInterface.onPaymentSuccess();
+    {   //Add conditions whatever you want to make the transaction cancel
+        if(payment.getTotal_amout()<0)
+        {
+            paymentInterface.onPaymentCancelled();
+        }
+        //Add conditions whatever you want to make the transaction failed
+        else if(payment.getMerchant_id()==null || payment.getMerchant_id().length()==0)
+        {
+
+            paymentInterface.onPaymentFailed();
+        }
+        //Add conditions whatever you want to make the transaction success
+        else
+        {
+            paymentInterface.onPaymentSuccess();
+        }
+
 
     }
 }
