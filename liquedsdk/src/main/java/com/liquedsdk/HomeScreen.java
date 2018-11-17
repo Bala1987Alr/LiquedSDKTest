@@ -13,6 +13,7 @@ import com.liquedsdk.Payment.PaymentBuilder;
 import com.liquedsdk.Security.Preferences;
 import com.liquedsdk.apikey.APIBuilder;
 import com.liquedsdk.apikey.APIKey;
+import com.liquedsdk.exceptions.PaymentException;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -42,7 +43,7 @@ public class HomeScreen extends AppCompatActivity {
         apiKey.setPayment(payment);
         apiKey.doPayment(new APIKey.PaymentInterface() {
             @Override
-            public void onPaymentSuccess() {
+            public void onPaymentSuccess() throws PaymentException {
                 Toast.makeText(getApplicationContext(),"Payment Success",Toast.LENGTH_SHORT).show();
             }
 

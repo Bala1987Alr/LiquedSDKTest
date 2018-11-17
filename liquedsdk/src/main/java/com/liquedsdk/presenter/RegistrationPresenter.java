@@ -38,8 +38,7 @@ public class RegistrationPresenter implements IRegistrationPresenter{
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
-            }, 2000);
+                }}, 2000);
     }
 
 

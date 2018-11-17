@@ -103,7 +103,8 @@ public class Preferences {
             PublicKey publicKey=privateKeyEntry.getCertificate().getPublicKey();
 
 
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) { // below android m
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                // below android m
                 inputCipher = Cipher.getInstance(RSA_MODE, "AndroidOpenSSL");
             }
             else {
@@ -128,29 +129,26 @@ public class Preferences {
     public Key getSecretKey(Context context) throws Exception{
 
         SharedPreferences pref = context.getSharedPreferences(SHARED_PREFENCE_NAME, Context.MODE_PRIVATE);
-        String enryptedKeyB64 = pref.getString(ENCRYPTED_KEY, null);
-        System.out.println("Encrypted Base64 from Preference : "+enryptedKeyB64);
-        byte[] encryptedKey = Base64.decode(enryptedKeyB64, Base64.DEFAULT);
-        System.out.println("Decrypted from Base64 from Preference : "+encryptedKey.toString());
+        String encryptedKeyB64 = pref.getString(ENCRYPTED_KEY, null);
+        byte[] encryptedKey = Base64.decode(encryptedKeyB64, Base64.DEFAULT);
         byte[] key = rsaDecrypt(encryptedKey);
-        System.out.println("Decrypted RSA from Preference : "+key.toString());
         return new SecretKeySpec(key, "AES");
 
     }
 
     private void generateAndStoreAES(Context context) throws Exception{
         SharedPreferences pref = context.getSharedPreferences(SHARED_PREFENCE_NAME, Context.MODE_PRIVATE);
-        String enryptedKeyB64 = pref.getString(ENCRYPTED_KEY, null);
+        String encryptedKeyB64 = pref.getString(ENCRYPTED_KEY, null);
 
-        if (enryptedKeyB64 == null || enryptedKeyB64.length()==0) {
+        if (encryptedKeyB64 == null || encryptedKeyB64.length()==0) {
             byte[] key = new byte[16];
             SecureRandom secureRandom = new SecureRandom();
             secureRandom.nextBytes(key);
             byte[] encryptedKey = rsaEncrypt(key);
             String encrypted=Base64.encodeToString(encryptedKey, Base64.DEFAULT);
-            enryptedKeyB64 = Base64.encodeToString(encryptedKey, Base64.DEFAULT);
+            encryptedKeyB64 = Base64.encodeToString(encryptedKey, Base64.DEFAULT);
             SharedPreferences.Editor edit = pref.edit();
-            edit.putString(ENCRYPTED_KEY, enryptedKeyB64);
+            edit.putString(ENCRYPTED_KEY, encryptedKeyB64);
             edit.commit();
         }
 
@@ -183,7 +181,8 @@ public class Preferences {
         ArrayList<Byte> values = new ArrayList<>();
 
         try {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) { // below android m
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                // below android m
                 output = Cipher.getInstance(RSA_MODE, "AndroidOpenSSL");
             }
             else {
