@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.liquedsdk.Security.Preferences;
+import com.liquedsdk.apikey.APIBuilder;
+import com.liquedsdk.apikey.APIKey;
 import com.liquedsdk.presenter.IRegistrationPresenter;
 import com.liquedsdk.presenter.RegistrationPresenter;
 import com.liquedsdk.view.IRegistrationView;
@@ -32,6 +34,10 @@ public class RegistrationScreen extends AppCompatActivity implements IRegistrati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_screen);
+
+        APIKey a=new APIBuilder().build();
+        Toast.makeText(this,a.getAppSecret(),Toast.LENGTH_SHORT).show();
+        a.getAppSecret();
 
         editText_UserName = (EditText) this.findViewById(R.id.edit_username);
         editText_Password = (EditText) this.findViewById(R.id.edit_password);

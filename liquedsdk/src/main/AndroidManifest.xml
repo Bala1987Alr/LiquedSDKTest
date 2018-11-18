@@ -9,7 +9,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginScreen" />
         <activity android:name=".RegistrationScreen" />
-        <activity android:name=".HomeScreen"></activity>
+        <activity android:name=".HomeScreen" />
     </application>
 
 </manifest>
