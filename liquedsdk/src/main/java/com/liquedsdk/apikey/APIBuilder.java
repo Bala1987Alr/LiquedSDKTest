@@ -26,7 +26,8 @@ public class APIBuilder {
         return this;
     }
 
-    public APIBuilder() {
+    public APIBuilder()
+    {
 
     }
 

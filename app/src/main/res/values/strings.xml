@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LiquedSDK</string>
+    <string name="app_seacret_key">adasdada</string>
 </resources>

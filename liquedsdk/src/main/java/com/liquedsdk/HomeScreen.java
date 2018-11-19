@@ -13,7 +13,6 @@ import com.liquedsdk.Payment.PaymentBuilder;
 import com.liquedsdk.Security.Preferences;
 import com.liquedsdk.apikey.APIBuilder;
 import com.liquedsdk.apikey.APIKey;
-import com.liquedsdk.exceptions.PaymentException;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -32,7 +31,7 @@ public class HomeScreen extends AppCompatActivity {
     }
     public void payment(View view)
     {
-
+        Toast.makeText(this,"coming",Toast.LENGTH_SHORT).show();
         Payment payment=new PaymentBuilder()
                 .setPaymentTitle("")
                 .setTotalAmout(10)
@@ -43,7 +42,7 @@ public class HomeScreen extends AppCompatActivity {
         apiKey.setPayment(payment);
         apiKey.doPayment(new APIKey.PaymentInterface() {
             @Override
-            public void onPaymentSuccess() throws PaymentException {
+            public void onPaymentSuccess() {
                 Toast.makeText(getApplicationContext(),"Payment Success",Toast.LENGTH_SHORT).show();
             }
 

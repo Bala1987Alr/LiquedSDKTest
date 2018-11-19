@@ -41,22 +41,27 @@ public class APIKey{
     }
 
     public void setAppSecret(String appSecret) {
+
         this.appSecret = appSecret;
     }
 
     public String getApiKey() {
+
         return apiKey;
     }
 
     public void setApiKey(String apiKey) {
+
         this.apiKey = apiKey;
     }
 
     public Context getContext() {
+
         return context;
     }
 
     public void setContext(Context context) {
+
         this.context = context;
     }
 
@@ -78,6 +83,7 @@ public class APIKey{
             if(checkAPIKey(this.appSecret, this.apiKey))
             {
                 paymentToMerchant();
+
             }else
             {
                 paymentInterface.onPaymentFailed();

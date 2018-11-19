@@ -1,4 +1,4 @@
-package com.liquedsdk;
+package com.test;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
